@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Good — Café, Brunch & Chicha</title>
+<meta name="description" content="The Good — cafés, thés, jus, cocktails, crêpes, gaufres, petits-déjeuners et chichas. Carte complète, wifi gratuit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Anton&family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1a1a1a;
+    --bg-soft:#222222;
+    --surface:#272727;
+    --line: rgba(255,255,255,0.10);
+    --mustard:#f3c53c;
+    --mustard-deep:#d9a827;
+    --rust:#c6622b;
+    --cream:#f5f1e6;
+    --cream-dim: rgba(245,241,230,0.62);
+    --ink:#1a1a1a;
+    --radius: 18px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  body{
+    background-image:
+      radial-gradient(ellipse 900px 500px at 10% -10%, rgba(243,197,60,0.10), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 110% 10%, rgba(198,98,43,0.10), transparent 60%),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.012) 0 2px, transparent 2px 4px);
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    letter-spacing:0.01em;
+    line-height:1.04;
+    margin:0;
+  }
+  .marker{
+    font-family:'Permanent Marker', cursive;
+    font-weight:400;
+  }
+
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:40;
+    backdrop-filter: blur(10px);
+    background: rgba(26,26,26,0.80);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px;
+    max-width:1080px; margin:0 auto;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    text-decoration:none;
+  }
+  .brand-name{ font-family:'Permanent Marker', cursive; font-size:1.4rem; color:var(--mustard); }
+  .nav-links{ display:flex; gap:24px; align-items:center; }
+  .nav-links a{
+    text-decoration:none;
+    font-size:0.92rem;
+    color: var(--cream-dim);
+    transition: color .18s ease;
+  }
+  .nav-links a:hover{ color:var(--cream); }
+  .nav-cta{
+    background: var(--mustard);
+    color:var(--ink) !important;
+    padding:9px 16px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:0.88rem !important;
+  }
+  .nav-cta:hover{ background:#f5d363; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding: 74px 0 56px;
+    position:relative;
+    overflow:hidden;
+    text-align:center;
+  }
+  .hero-doodle{
+    position:absolute;
+    opacity:0.10;
+    stroke:var(--cream);
+    pointer-events:none;
+  }
+  .hero-eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    color:var(--mustard);
+    font-weight:600;
+    font-size:0.9rem;
+    margin-bottom:14px;
+    opacity:0;
+    animation: rise .7s ease forwards;
+  }
+  .hero-eyebrow .dot{
+    width:7px;height:7px;border-radius:50%;
+    background: var(--mustard);
+    box-shadow:0 0 0 4px rgba(243,197,60,0.18);
+  }
+  .hero h1{
+    font-size: clamp(3.4rem, 10vw, 6.2rem);
+    color: var(--mustard);
+    opacity:0;
+    animation: rise .7s ease .08s forwards;
+  }
+  .hero h1 .pre{
+    display:block;
+    font-family:'Anton', sans-serif;
+    font-size: 0.26em;
+    letter-spacing:0.14em;
+    color:var(--cream);
+    margin-bottom:4px;
+  }
+  .fresh-badge{
+    display:inline-flex; flex-direction:column; align-items:center; justify-content:center;
+    width:92px; height:92px;
+    border-radius:50%;
+    border:2px dashed var(--mustard);
+    color:var(--mustard);
+    transform: rotate(-9deg);
+    font-size:0.68rem;
+    font-weight:700;
+    letter-spacing:0.03em;
+    margin: 18px auto 0;
+    opacity:0;
+    animation: rise .7s ease .18s forwards;
+  }
+  .fresh-badge b{ font-family:'Anton',sans-serif; font-size:1rem; letter-spacing:0; margin-top:2px;}
+
+  .hero p.lede{
+    margin:22px auto 0;
+    font-size:1.1rem;
+    color: var(--cream-dim);
+    max-width: 48ch;
+    opacity:0;
+    animation: rise .7s ease .22s forwards;
+  }
+  .hero-actions{
+    margin-top:30px;
+    display:flex; gap:14px; flex-wrap:wrap; justify-content:center;
+    opacity:0;
+    animation: rise .7s ease .3s forwards;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:9px;
+    padding:14px 24px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:0.98rem;
+    text-decoration:none;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition: transform .15s ease, background .18s ease, border-color .18s ease;
+    font-family:inherit;
+  }
+  .btn:active{ transform: scale(0.97); }
+  .btn-primary{
+    background: var(--mustard);
+    color: var(--ink);
+  }
+  .btn-primary:hover{ background:#f5d363; }
+  .btn-outline{
+    background:transparent;
+    border-color: var(--line);
+    color:var(--cream);
+  }
+  .btn-outline:hover{ border-color: var(--mustard); }
+
+  @keyframes rise{
+    from{ opacity:0; transform: translateY(16px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .divider{
+    height:34px;
+    width:100%;
+    background-image: repeating-linear-gradient(90deg, transparent 0 26px, var(--line) 26px 27px);
+    opacity:0.5;
+    margin: 0 0 8px;
+  }
+
+  section{ padding: 66px 0; }
+  .section-head{
+    max-width:640px;
+    margin: 0 auto 40px;
+    text-align:center;
+  }
+  .section-head .kicker{
+    color: var(--mustard);
+    font-weight:700;
+    font-size:0.9rem;
+    margin-bottom:8px;
+  }
+  .section-head h2{
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+  }
+  .section-head p{
+    color: var(--cream-dim);
+    margin-top:12px;
+    font-size:1rem;
+  }
+
+  /* ---------- Menu ---------- */
+  #menu{ background: var(--bg-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .menu-tabs{
+    display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+    margin-bottom:38px;
+  }
+  .menu-tab{
+    background:transparent;
+    border:1px solid var(--line);
+    color: var(--cream-dim);
+    padding:10px 18px;
+    border-radius:999px;
+    font-family:inherit;
+    font-size:0.88rem;
+    font-weight:600;
+    cursor:pointer;
+    transition: all .18s ease;
+  }
+  .menu-tab.active{
+    background: var(--mustard);
+    color: var(--ink);
+    border-color: var(--mustard);
+  }
+  .menu-tab:hover:not(.active){ border-color: var(--mustard); color:var(--cream); }
+
+  .menu-panel{ display:none; }
+  .menu-panel.active{ display:block; animation: fadeIn .3s ease; }
+  @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+
+  .menu-sub{ max-width: 820px; margin: 0 auto 34px; }
+  .menu-sub h3{
+    font-family:'Work Sans', sans-serif;
+    font-weight:700;
+    font-size:0.95rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color: var(--mustard);
+    margin-bottom: 14px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .menu-list{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 48px;
+  }
+  .menu-item{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    padding:13px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .menu-item .name{
+    font-weight:600;
+    font-size:0.98rem;
+  }
+  .menu-item .desc{
+    display:block;
+    font-weight:400;
+    font-size:0.82rem;
+    color: var(--cream-dim);
+    margin-top:3px;
+  }
+  .menu-item .leader{
+    flex:1;
+    border-bottom:1px dotted var(--line);
+    transform: translateY(-4px);
+  }
+  .menu-item .price{
+    color: var(--mustard);
+    font-weight:700;
+    white-space:nowrap;
+    font-family:'Anton', sans-serif;
+    font-size:1rem;
+  }
+  .menu-note{
+    text-align:center;
+    color: var(--cream-dim);
+    font-size:0.85rem;
+    margin-top:10px;
+  }
+
+  @media (max-width: 720px){
+    .menu-list{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Wifi ---------- */
+  #wifi .wifi-card{
+    max-width: 620px;
+    margin: 0 auto;
+    background: var(--surface);
+    border:1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 40px;
+    text-align:center;
+  }
+  .wifi-icon{
+    width:62px; height:62px;
+    margin: 0 auto 16px;
+    border-radius:50%;
+    background: var(--mustard);
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ---------- Modal ---------- */
+  .modal-backdrop{
+    position:fixed; inset:0;
+    background: rgba(8,8,8,0.72);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index:100;
+    padding:20px;
+  }
+  .modal-backdrop.open{ display:flex; }
+  .modal{
+    background: var(--bg-soft);
+    border:1px solid var(--line);
+    border-radius: var(--radius);
+    max-width: 420px;
+    width:100%;
+    padding: 32px 28px;
+    position:relative;
+    animation: pop .22s ease;
+  }
+  @keyframes pop{ from{ opacity:0; transform: scale(0.94) translateY(8px); } to{opacity:1; transform:none;} }
+  .modal-close{
+    position:absolute; top:14px; right:14px;
+    background:none; border:none; color:var(--cream-dim);
+    font-size:1.4rem; cursor:pointer; line-height:1;
+    padding:4px;
+  }
+  .modal-close:hover{ color:var(--cream); }
+  .modal h3{ font-size:1.4rem; margin-bottom:6px; }
+  .modal .sub{ color:var(--cream-dim); font-size:0.9rem; margin-bottom:22px; }
+  .wifi-field{
+    display:flex; align-items:center; justify-content:space-between;
+    background: var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px 16px;
+    margin-bottom:12px;
+  }
+  .wifi-field .label{
+    font-size:0.74rem;
+    color: var(--cream-dim);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    display:block;
+    margin-bottom:4px;
+  }
+  .wifi-field .val{
+    font-family:'Anton', sans-serif;
+    font-size:1.1rem;
+    letter-spacing:0.02em;
+  }
+  .copy-btn{
+    background: var(--mustard);
+    color: var(--ink);
+    border:none;
+    border-radius:8px;
+    padding:8px 13px;
+    font-weight:700;
+    font-size:0.8rem;
+    cursor:pointer;
+    font-family:inherit;
+    flex-shrink:0;
+  }
+  .copy-btn:hover{ background:#f5d363; }
+  .copy-btn.copied{ background: var(--rust); color:#fff; }
+  .modal-note{
+    margin-top:16px;
+    font-size:0.8rem;
+    color: var(--cream-dim);
+  }
+
+  /* ---------- Contact ---------- */
+  #contact{
+    background: var(--bg-soft);
+    border-top:1px solid var(--line);
+  }
+  .contact-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .contact-card{
+    background: var(--surface);
+    border:1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 30px;
+  }
+  .contact-card h3{ font-size:1.2rem; margin-bottom:14px; }
+  .contact-row{
+    display:flex; gap:12px; align-items:flex-start;
+    color: var(--cream-dim);
+    font-size:0.94rem;
+    margin-bottom:12px;
+  }
+  .contact-row b{ color:var(--cream); display:block; font-weight:600;}
+  .ig-follow{
+    display:inline-flex; align-items:center; gap:10px;
+    margin-top:14px;
+    background: var(--mustard);
+    color: var(--ink);
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:0.92rem;
+  }
+  .ig-follow:hover{ background:#f5d363; }
+
+  @media (max-width: 860px){
+    .contact-grid{ grid-template-columns: 1fr; }
+    .nav-links{ display:none; }
+  }
+
+  footer{
+    padding: 32px 0 40px;
+    text-align:center;
+    color: var(--cream-dim);
+    font-size:0.85rem;
+  }
+  footer .marker{ color:var(--mustard); font-size:1.1rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="#top" class="brand">
+      <span class="brand-name">The Good</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#menu">Carte</a>
+      <a href="#wifi">Wifi</a>
+      <a href="#contact">Contact</a>
+      <a href="#wifi" class="nav-cta">Wifi gratuit</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-eyebrow"><span class="dot"></span> Café · Brunch · Chicha</div>
+      <h1><span class="pre">MENU</span>The Good</h1>
+      <div class="fresh-badge">100%<b>FRESH</b></div>
+      <p class="lede">Cafés italiens, jus pressés, crêpes gourmandes, brunchs généreux et chichas — tout est là, sur une seule carte.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-primary">Voir la carte</a>
+        <button class="btn btn-outline" id="openWifiBtn" type="button">Wifi gratuit</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="divider"></div></div>
+
+  <section id="menu">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">La carte</div>
+        <h2>Tout The Good, sur une table</h2>
+        <p>Carte transcrite depuis notre menu affiché en salle.</p>
+      </div>
+
+      <div class="menu-tabs">
+        <button class="menu-tab active" data-tab="dejeuners">Petits-déjeuners</button>
+        <button class="menu-tab" data-tab="crepes">Crêpes, Gaufres &amp; Pancakes</button>
+        <button class="menu-tab" data-tab="chaudes">Boissons Chaudes</button>
+        <button class="menu-tab" data-tab="thes">Thés &amp; Soft</button>
+        <button class="menu-tab" data-tab="jus">Jus, Cocktails &amp; Mojitos</button>
+        <button class="menu-tab" data-tab="smoothies">Smoothies &amp; Chocolats</button>
+        <button class="menu-tab" data-tab="chicha">Chichas</button>
+      </div>
+
+      <!-- Petits-déjeuners -->
+      <div class="menu-panel active" id="panel-dejeuners">
+        <div class="menu-sub">
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Brunch (pour 2 personnes)</span><span class="desc">Café, jus de saison, eau 1L, omelette, viennoiserie, yaourt maison, jambon, fromage, pâtisserie, huile d'olive, miel, confiture, beurre, salés</span></div><div class="leader"></div><div class="price">25 DT</div></div>
+            <div class="menu-item"><div><span class="name">Zemni</span><span class="desc">Jus de saison, œuf dur, viennoiserie, raieb, melawi, dattes, huile d'olive, chamia, miel, beurre, bsissa</span></div><div class="leader"></div><div class="price">16 DT</div></div>
+            <div class="menu-item"><div><span class="name">Le Petit Bonjour</span><span class="desc">Café au choix, eau 0,5L, viennoiserie, jus de saison</span></div><div class="leader"></div><div class="price">7.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">The Good</span><span class="desc">Café, jus de saison, eau 0,5L, viennoiserie, pâtisserie, omelette, assortiment de fromages, confiture, beurre, crème à tartiner</span></div><div class="leader"></div><div class="price">15 DT</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Crêpes, Gaufres, Pancakes -->
+      <div class="menu-panel" id="panel-crepes">
+        <div class="menu-sub">
+          <h3>Crêpes sucrées</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Crêpe au sucre / confiture / miel</span></div><div class="leader"></div><div class="price">4 DT</div></div>
+            <div class="menu-item"><div><span class="name">Crêpe Nutella</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Crêpe Nutella Banane</span></div><div class="leader"></div><div class="price">9 DT</div></div>
+            <div class="menu-item"><div><span class="name">Crêpe Fruits Secs</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+            <div class="menu-item"><div><span class="name">Crêpe Nutella Spéculoos</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+            <div class="menu-item"><div><span class="name">Crêpe Nutella Banane Spéculoos</span></div><div class="leader"></div><div class="price">12 DT</div></div>
+            <div class="menu-item"><div><span class="name">Crêpe Ferrero Rocher / Kinder Bueno</span></div><div class="leader"></div><div class="price">12 DT</div></div>
+            <div class="menu-item"><div><span class="name">Crêpe Mika</span></div><div class="leader"></div><div class="price">12 DT</div></div>
+            <div class="menu-item"><div><span class="name">Crêpe The Good</span><span class="desc">Nutella, fruits de saison, fruits secs, glace</span></div><div class="leader"></div><div class="price">13 DT</div></div>
+          </div>
+        </div>
+        <div class="menu-sub">
+          <h3>Crêpes salées</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Crêpe Thon fromage</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Crêpe Jambon fromage</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Crêpe Spéciale</span><span class="desc">Thon, jambon, fromage, œuf</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+            <div class="menu-item"><div><span class="name">Crêpe 4 Fromages</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+            <div class="menu-item"><div><span class="name">Crêpe The Good</span><span class="desc">Thon, jambon, œuf, champignons, fromage</span></div><div class="leader"></div><div class="price">12 DT</div></div>
+          </div>
+        </div>
+        <div class="menu-sub">
+          <h3>Gaufres</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Gaufre Nutella</span></div><div class="leader"></div><div class="price">9 DT</div></div>
+            <div class="menu-item"><div><span class="name">Gaufre miel et fruits secs</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+            <div class="menu-item"><div><span class="name">Gaufre Nutella Banane</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+            <div class="menu-item"><div><span class="name">Gaufre Nutella Fruits secs</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+            <div class="menu-item"><div><span class="name">Gaufre The Good</span><span class="desc">Nutella, fruits de saison, fruits secs, glace</span></div><div class="leader"></div><div class="price">13 DT</div></div>
+          </div>
+        </div>
+        <div class="menu-sub">
+          <h3>Pancakes</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Pancake Nutella</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Pancake Nutella Banane</span></div><div class="leader"></div><div class="price">9 DT</div></div>
+            <div class="menu-item"><div><span class="name">Pancake Nutella Fruits secs</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+            <div class="menu-item"><div><span class="name">Pancake The Good</span></div><div class="leader"></div><div class="price">12 DT</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boissons chaudes -->
+      <div class="menu-panel" id="panel-chaudes">
+        <div class="menu-sub">
+          <h3>Cafés italiens</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Espresso</span></div><div class="leader"></div><div class="price">2.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Cappucin</span></div><div class="leader"></div><div class="price">2.7 DT</div></div>
+            <div class="menu-item"><div><span class="name">Direct</span></div><div class="leader"></div><div class="price">3 DT</div></div>
+            <div class="menu-item"><div><span class="name">Express spécial</span></div><div class="leader"></div><div class="price">3 DT</div></div>
+            <div class="menu-item"><div><span class="name">Cappucin spécial</span></div><div class="leader"></div><div class="price">3.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Direct spécial</span></div><div class="leader"></div><div class="price">4 DT</div></div>
+            <div class="menu-item"><div><span class="name">Américain</span></div><div class="leader"></div><div class="price">2.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Café aromatisé (au choix)</span></div><div class="leader"></div><div class="price">3 DT</div></div>
+          </div>
+        </div>
+        <div class="menu-sub">
+          <h3>Nespresso</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Nespresso</span></div><div class="leader"></div><div class="price">4.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Macchiato</span></div><div class="leader"></div><div class="price">5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Café crème</span></div><div class="leader"></div><div class="price">5.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Spéciale</span></div><div class="leader"></div><div class="price">5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Macchiato spécial</span></div><div class="leader"></div><div class="price">5.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Café crème spécial</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+          </div>
+        </div>
+        <div class="menu-sub">
+          <h3>Cafés The Good</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Cappuccino</span></div><div class="leader"></div><div class="price">5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Nescafé au lait</span></div><div class="leader"></div><div class="price">3.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Verre de lait (chaud/froid)</span></div><div class="leader"></div><div class="price">1.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Café Tiramisu</span><span class="desc">Espresso, biscuit, sauce tiramisu, chantilly</span></div><div class="leader"></div><div class="price">5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Café Liégeois</span><span class="desc">Espresso, glace vanille, chantilly</span></div><div class="leader"></div><div class="price">5.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Caramel Crunch</span><span class="desc">Espresso, sauce caramel, crunch, glace caramel, chantilly</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Frappuccino</span><span class="desc">Lait, poudre frappuccino, glace vanille, chantilly</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Café Marrocchino</span><span class="desc">Chocolat / vanille / caramel / noisette</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Café The Good</span><span class="desc">Espresso, Nescafé, Nestlé, glace {vanille, caramel}, chantilly</span></div><div class="leader"></div><div class="price">9 DT</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thés & soft -->
+      <div class="menu-panel" id="panel-thes">
+        <div class="menu-sub">
+          <h3>Nos thés</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Thé à la menthe</span></div><div class="leader"></div><div class="price">2 DT</div></div>
+            <div class="menu-item"><div><span class="name">Thé à la menthe (sirop)</span></div><div class="leader"></div><div class="price">2.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Thé aux amandes</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Thé aux pignons</span></div><div class="leader"></div><div class="price">7 DT</div></div>
+            <div class="menu-item"><div><span class="name">Thé anglais</span></div><div class="leader"></div><div class="price">3 DT</div></div>
+            <div class="menu-item"><div><span class="name">Thé infusion</span></div><div class="leader"></div><div class="price">3 DT</div></div>
+          </div>
+        </div>
+        <div class="menu-sub">
+          <h3>Boissons soft</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Eau 1L</span></div><div class="leader"></div><div class="price">2.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Eau 0.5L</span></div><div class="leader"></div><div class="price">1.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Eau gazéifiée</span></div><div class="leader"></div><div class="price">2.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">La Pétillante</span></div><div class="leader"></div><div class="price">3 DT</div></div>
+            <div class="menu-item"><div><span class="name">Soda au choix</span><span class="desc">Coca Cola, Fanta, Boga, Orangina, Apla…</span></div><div class="leader"></div><div class="price">3 DT</div></div>
+            <div class="menu-item"><div><span class="name">Energy drink</span><span class="desc">Red Bull / Shark</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Pepsi / Miranda / 7UP</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Indien</span><span class="desc">Soda, arôme au choix</span></div><div class="leader"></div><div class="price">4 DT</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jus, cocktails, mojitos -->
+      <div class="menu-panel" id="panel-jus">
+        <div class="menu-sub">
+          <h3>Jus</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Citronnade</span></div><div class="leader"></div><div class="price">4 DT</div></div>
+            <div class="menu-item"><div><span class="name">Citronnade (à la menthe / grenadine)</span></div><div class="leader"></div><div class="price">4.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Citronnade aux amandes</span></div><div class="leader"></div><div class="price">5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Jus d'orange frais (selon saison)</span></div><div class="leader"></div><div class="price">4 DT</div></div>
+            <div class="menu-item"><div><span class="name">Jus de fraise</span></div><div class="leader"></div><div class="price">5.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Jus de pomme</span></div><div class="leader"></div><div class="price">4 DT</div></div>
+            <div class="menu-item"><div><span class="name">Jus kiwi</span></div><div class="leader"></div><div class="price">5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Jus d'ananas</span></div><div class="leader"></div><div class="price">7 DT</div></div>
+            <div class="menu-item"><div><span class="name">Jus de poire</span></div><div class="leader"></div><div class="price">7 DT</div></div>
+            <div class="menu-item"><div><span class="name">Jus de pêche</span></div><div class="leader"></div><div class="price">7 DT</div></div>
+            <div class="menu-item"><div><span class="name">Jus de melon</span></div><div class="leader"></div><div class="price">7 DT</div></div>
+            <div class="menu-item"><div><span class="name">Jus de fraise citron</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Jus de fraise banane</span></div><div class="leader"></div><div class="price">7.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Jus de kiwi banane</span></div><div class="leader"></div><div class="price">8.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Lait de poule</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+          </div>
+        </div>
+        <div class="menu-sub">
+          <h3>Cocktails</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Pina Colada</span><span class="desc">Lait de coco, ananas</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Délice</span><span class="desc">Banane, kiwi, framboise, pêche</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Bella Donna</span><span class="desc">Fraise, kiwi, banane</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Sud Tropical</span><span class="desc">Banane, dattes, fruits secs</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Punchy</span><span class="desc">Banane, pêche, glace vanille, glace fraise</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Piccolo</span><span class="desc">Banane, mangue, glace vanille, fruits secs</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Énergitique</span><span class="desc">Boisson énergisante, menthe fraîche, glace citron, banane</span></div><div class="leader"></div><div class="price">9 DT</div></div>
+            <div class="menu-item"><div><span class="name">Le Prince Galles</span><span class="desc">Astuces de barman</span></div><div class="leader"></div><div class="price">9 DT</div></div>
+            <div class="menu-item"><div><span class="name">The Good</span><span class="desc">Pomme, banane, framboise, dattes, fruits secs, glace pistache, chantilly</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+          </div>
+        </div>
+        <div class="menu-sub">
+          <h3>Mojitos</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Virgin</span><span class="desc">Citron, menthe verte, arôme mojito, glaçons pilés, boga lime</span></div><div class="leader"></div><div class="price">5.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Fraise</span><span class="desc">Citron, menthe verte, arôme mojito, glaçons pilés, fraise</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Apple</span><span class="desc">Citron, menthe verte, arôme mojito, glaçons pilés, apla</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Cerise</span><span class="desc">Citron, menthe verte, arôme mojito, glaçons pilés, arôme cerise</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Red Bull</span><span class="desc">Citron, menthe verte, arôme mojito, glaçons pilés, Red Bull</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Smoothies, Milkshakes, Chocolats -->
+      <div class="menu-panel" id="panel-smoothies">
+        <div class="menu-sub">
+          <h3>Smoothies</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Passion fruits</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Yuzu</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Red Berries</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Lychee</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+          </div>
+        </div>
+        <div class="menu-sub">
+          <h3>Milk-shakes</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Milk-shake au choix</span><span class="desc">Chocolat / vanille / fraise / caramel / noisette / pistache</span></div><div class="leader"></div><div class="price">7 DT</div></div>
+            <div class="menu-item"><div><span class="name">Milk-shake Banane</span></div><div class="leader"></div><div class="price">7 DT</div></div>
+            <div class="menu-item"><div><span class="name">Milk-shake Nutella</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Milk-shake Oreo</span></div><div class="leader"></div><div class="price">7 DT</div></div>
+            <div class="menu-item"><div><span class="name">Milk-shake Kinder Bueno</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+            <div class="menu-item"><div><span class="name">Milk-shake Ferrero Rocher</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+            <div class="menu-item"><div><span class="name">Milk-shake Snickers</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+          </div>
+        </div>
+        <div class="menu-sub">
+          <h3>Chocolats The Good</h3>
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Chocolat au lait</span></div><div class="leader"></div><div class="price">3 DT</div></div>
+            <div class="menu-item"><div><span class="name">Chocolat chaud</span></div><div class="leader"></div><div class="price">5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Chocolat chaud chantilly</span></div><div class="leader"></div><div class="price">5.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Chocolat chaud crunch</span></div><div class="leader"></div><div class="price">5.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Chocolat chaud amandes</span></div><div class="leader"></div><div class="price">6.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Chocolat chaud noisette</span></div><div class="leader"></div><div class="price">6.5 DT</div></div>
+            <div class="menu-item"><div><span class="name">Chocolat glacé</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Chocolat liégeois</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Chocolaty The Good</span><span class="desc">Chocolat, banane, glace vanille, chantilly, fruits secs</span></div><div class="leader"></div><div class="price">8 DT</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chichas -->
+      <div class="menu-panel" id="panel-chicha">
+        <div class="menu-sub">
+          <div class="menu-list">
+            <div class="menu-item"><div><span class="name">Chicha Fakher</span></div><div class="leader"></div><div class="price">6 DT</div></div>
+            <div class="menu-item"><div><span class="name">Chicha Glaçon</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+            <div class="menu-item"><div><span class="name">Chicha Glaçon Turk</span></div><div class="leader"></div><div class="price">10 DT</div></div>
+            <div class="menu-item"><div><span class="name">Chicha VIP</span></div><div class="leader"></div><div class="price">20 DT</div></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="menu-note">Carte transcrite depuis le menu affiché en salle — quelques prix écrits à la main (cafés italiens, chicha Fakher) sont à reconfirmer avec vous.</p>
+    </div>
+  </section>
+
+  <section id="wifi">
+    <div class="wrap">
+      <div class="wifi-card">
+        <div class="wifi-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 20.5C12.8284 20.5 13.5 19.8284 13.5 19C13.5 18.1716 12.8284 17.5 12 17.5C11.1716 17.5 10.5 18.1716 10.5 19C10.5 19.8284 11.1716 20.5 12 20.5Z" fill="#1a1a1a"/><path d="M8.5 15.5C10.5 13.7 13.5 13.7 15.5 15.5" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round"/><path d="M5.2 11.8C9 8.3 15 8.3 18.8 11.8" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round"/><path d="M2 8.2C7.6 3.2 16.4 3.2 22 8.2" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h2>Wifi gratuit</h2>
+        <p style="color:var(--cream-dim); margin-top:10px;">Installez-vous, le wifi est offert. Voici les identifiants :</p>
+        <div style="margin-top:24px;">
+          <button class="btn btn-primary" id="openWifiBtn2" type="button">Afficher le mot de passe wifi</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Nous trouver</div>
+        <h2>Venez boire un bon café</h2>
+      </div>
+      <div class="contact-grid" style="grid-template-columns: 1fr; max-width:480px; margin:0 auto;">
+        <div class="contact-card">
+          <h3>Localisation</h3>
+          <div class="contact-row">📍 <div><b>The Good</b>Retrouvez-nous sur Google Maps</div></div>
+          <a href="https://maps.app.goo.gl/EfkSjABoK9ZfgUBh9" target="_blank" rel="noopener" class="ig-follow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-7.1 7-12a7 7 0 1 0-14 0c0 4.9 7 12 7 12Z" stroke="#1a1a1a" stroke-width="1.8"/><circle cx="12" cy="9" r="2.3" stroke="#1a1a1a" stroke-width="1.8"/></svg>
+            Voir sur Google Maps
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="marker">The Good</span> — Café, Brunch &amp; Chicha
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="wifiModal">
+  <div class="modal">
+    <button class="modal-close" id="closeWifiBtn" aria-label="Fermer">&times;</button>
+    <h3>Wifi The Good</h3>
+    <p class="sub">Connectez-vous et profitez.</p>
+    <div class="wifi-field">
+      <div>
+        <span class="label">Réseau</span>
+        <span class="val" id="wifiSsid">the Good</span>
+      </div>
+      <button class="copy-btn" data-copy="the Good">Copier</button>
+    </div>
+    <div class="wifi-field">
+      <div>
+        <span class="label">Mot de passe</span>
+        <span class="val" id="wifiPass">thegood2026</span>
+      </div>
+      <button class="copy-btn" data-copy="thegood2026">Copier</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.menu-tab');
+  const panels = document.querySelectorAll('.menu-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  const modal = document.getElementById('wifiModal');
+  const openBtns = [document.getElementById('openWifiBtn'), document.getElementById('openWifiBtn2')];
+  const closeBtn = document.getElementById('closeWifiBtn');
+  openBtns.forEach(b => b && b.addEventListener('click', () => modal.classList.add('open')));
+  closeBtn.addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') modal.classList.remove('open'); });
+
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.dataset.copy;
+      navigator.clipboard && navigator.clipboard.writeText(text).catch(()=>{});
+      const original = btn.textContent;
+      btn.textContent = 'Copié !';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = original; btn.classList.remove('copied'); }, 1600);
+    });
+  });
+</script>
+
+</body>
+</html>
